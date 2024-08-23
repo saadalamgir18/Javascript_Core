@@ -10,14 +10,25 @@ const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
 const current0El = document.getElementById("current--0");
 const current1El = document.getElementById("current--1");
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+
+let scores, currentScore, activePlayer, playing;
 // starting condition
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add("hidden");
+function initial_stage() {
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  diceEl.classList.add("hidden");
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+  player0El.classList.add("player--active");
+  player1El.classList.remove("player--active");
+
+  player0El.classList.remove("player--winner");
+  player1El.classList.remove("player--winner");
+}
+initial_stage();
 
 function switchPlayer() {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -52,7 +63,7 @@ btnHold.addEventListener("click", function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
     // check if players score is >= 100
-    if (scores[activePlayer] >= 15) {
+    if (scores[activePlayer] >= 100) {
       //   finsih the game
       playing = false;
       diceEl.classList.add("hidden");
@@ -68,3 +79,5 @@ btnHold.addEventListener("click", function () {
     }
   }
 });
+
+btnNew.addEventListener("click", initial_stage);
