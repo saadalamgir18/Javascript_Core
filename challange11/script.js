@@ -1,4 +1,4 @@
-players1 = [
+const players1 = [
   "Neuer",
   "Pavard",
   "Martinez",
@@ -11,7 +11,7 @@ players1 = [
   "Gnarby",
   "Lewandowski",
 ];
-players2 = [
+const players2 = [
   "Burki",
   "Schulz",
   "Hummels",
@@ -30,6 +30,7 @@ const game = {
   players: [players1, players2],
   score: "4:0",
   date: "Nov 9th 2037",
+  scored: ["Lewandowski", "Gnarby", "Lewandowski", "Hummels"],
   odds: {
     team1: 1.33,
     x: 3.25,
