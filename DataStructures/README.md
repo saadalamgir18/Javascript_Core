@@ -11,3 +11,11 @@
 # Nulliscoalising operator ??
 
 # Logical Assignment Operators with ||, && and ??
+
+# Optional channing
+
+# Sets
+
+# Maps
+
+# Strings

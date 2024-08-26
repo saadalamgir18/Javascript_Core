@@ -4,6 +4,23 @@
 const flights =
   "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
 
+//  Strings
+const airLine = "TAP Air Portugal";
+const plane = "A320";
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(airLine.length);
+console.log("B737"[0]);
+console.log(airLine.indexOf("r"));
+console.log(airLine.lastIndexOf("r"));
+console.log(airLine.indexOf("Portugal"));
+console.log(airLine.slice(4));
+console.log(typeof airLine);
+console.log(typeof new String(airLine));
+const astr = "hello to the hello team";
+console.log(astr.replaceAll("hello", "hi"));
+
+/*
 // Data needed for first part of the section
 const weekdayss = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const openingHours1 = {
@@ -81,7 +98,7 @@ for (const [key, value] of question) {
   if (typeof key === "number") console.log(`Answer ${key}: ${value}`);
 }
 
-/*
+
 // Sets
 const orderSet = new Set([
   "Pasta",
