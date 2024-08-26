@@ -41,6 +41,70 @@ const restaurant = {
     );
   },
 };
+//  Maps
+const rest = new Map();
+rest.set("name", "Classico Italiano");
+rest.set(1, "Firenze, Italy");
+rest.set(2, "Lisbon, Portugal");
+console.log(rest);
+rest
+  .set("categories", ["Italian", "Pizzeria", "Vegetarian", "Organic"])
+  .set("open", 11)
+  .set("close", 23)
+  .set(true, "We are open :D")
+  .set(false, "We are closed :(");
+console.log(rest.get("name"));
+console.log(rest.get(1));
+console.log(rest.get(true));
+console.log(rest.has("categories"));
+rest.delete(2);
+console.log(rest);
+console.log(rest.size);
+rest.clear();
+console.log(rest);
+
+const question = new Map([
+  ["question", "What is the best programming language in the world?"],
+  [1, "C"],
+  [2, "Java"],
+  [3, "JavaScript"],
+  ["correct", 3],
+  [true, "Correct"],
+  [false, "Try again"],
+]);
+// converting objects to maps
+
+const hoursMap = new Map(Object.entries(openingHours1));
+console.log(hoursMap);
+for (const [key, value] of question) {
+  // console.log(key, value);
+  if (typeof key === "number") console.log(`Answer ${key}: ${value}`);
+}
+
+/*
+// Sets
+const orderSet = new Set([
+  "Pasta",
+  "Pizza",
+  "Pizza",
+  "Risotto",
+  "Pasta",
+  "Pizza",
+]);
+console.log(orderSet);
+console.log(new Set("Saad"));
+console.log(orderSet.size);
+console.log(orderSet.has("Pizza"));
+console.log(orderSet.has("Bread"));
+orderSet.add("Garlic Bread");
+orderSet.add("Garlic Bread");
+orderSet.delete("Risotto");
+// orderSet.clear(); // this will clear the set
+console.log(orderSet);
+for (const order of orderSet) {
+  console.log(order);
+}
+
 // Looping Objects: Object Keys, Values, and Entries
 for (const days of Object.keys(openingHours1)) {
   console.log(days);
@@ -55,7 +119,7 @@ for (const [days, { open, close }] of Object.entries(openingHours1)) {
   console.log(days, open, close);
 }
 
-/*
+
 // Enhanced Object Literals
 
 // Looping Arrays: The for-of Loop
