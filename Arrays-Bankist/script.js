@@ -77,7 +77,19 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
-
+const createusername = function (accts) {
+  accts.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLocaleLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+    // return username;
+  });
+};
+const user = 'Steven Thomas Williams';
+createusername(accounts);
+console.log(accounts);
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -154,4 +166,11 @@ currenciesUnique.forEach(function (value, key, map) {
   console.log(`${key}: ${value}`);
 });
 
+
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const eurToUsd = 1.1;
+const movementsUSD = movements.map(mov => mov * eurToUsd);
+console.log(movements);
+console.log(movementsUSD);
 */
