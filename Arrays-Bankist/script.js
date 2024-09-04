@@ -61,9 +61,10 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
   containerMovements.innerHTML = '';
-  movements.forEach(function (mov, i) {
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
@@ -157,6 +158,20 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const loanAmount = Number(inputLoanAmount.value);
+  const depositReq = currentAccount.movements.some(
+    mov => mov >= loanAmount / 10
+  );
+  if (loanAmount > 0 && depositReq) {
+    currentAccount.movements.push(loanAmount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+  inputLoanAmount.blur();
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
   const userneme = inputCloseUsername.value;
@@ -168,6 +183,12 @@ btnClose.addEventListener('click', function (e) {
     containerApp.style.opacity = 0;
     inputClosePin.value = inputCloseUsername.value = '';
   }
+});
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
