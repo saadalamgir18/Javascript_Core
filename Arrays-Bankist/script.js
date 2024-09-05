@@ -282,8 +282,53 @@ const deposits = movements.filter(function (mov) {
 console.log(movements);
 console.log(deposits);
 const withdrawals = movements.filter(mov => mov < 0);
-*/
+
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const balance = movements.reduce((acc, curr, i, arr) => acc + curr, 0);
 console.log(balance);
+*/
+
+// Array Methods Practice
+// 1
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(deposit => deposit > 0)
+  .reduce((acc, curr) => acc + curr, 0);
+console.log(bankDepositSum);
+// 2
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, curr) => (curr >= 1000 ? ++acc : acc), 0);
+console.log(numDeposits1000);
+
+// 3
+const { deposit, withdrawls } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, curr) => {
+      curr > 0 ? (sums.deposit += curr) : (sums.withdrawls += curr);
+      return sums;
+    },
+    { deposit: 0, withdrawls: 0 }
+  );
+console.log(deposit, withdrawls);
+
+// 4.
+
+const converTitleCase = function (title) {
+  const capitlize = function (string) {
+    return string[0].toUpperCase() + string.slice(1);
+  };
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'with', 'in'];
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitlize(word)))
+    .join(' ');
+  return capitlize(titleCase);
+};
+
+console.log(converTitleCase('this is a nice TITLE'));
+console.log(converTitleCase('this is a long TITLE but not too LONG'));
+console.log(converTitleCase('and here is another title with EXAMPLE'));
