@@ -1,4 +1,4 @@
-Coding Challenge #21 | JavaScript 🔥
+Coding Challenge #16 | JavaScript 🔥
 
 Your tasks:
 
