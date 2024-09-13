@@ -132,7 +132,7 @@ const sarah = Object.create(PersonProto);
 sarah.init("Sarah", 1979);
 sarah.calAge();
 
-*/
+
 
 // Inheritance Between "Classes":Constructor Functions
 
@@ -167,3 +167,128 @@ console.log(mike instanceof Student);
 console.log(mike instanceof Person);
 Student.prototype.constructore = Student;
 console.dir(Student.prototype.constructore);
+
+
+// Inheritance Between "Classes":ES6 Classes
+
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+  calAge() {
+    console.log(2037 - this.birthYear);
+  }
+  get age() {
+    return 2037 - this.birthYear;
+  }
+  set fullName(name) {
+    if (name.includes(" ")) this._fullName = name;
+    else alert(`${name} is not a ful name!`);
+  }
+  get fullName() {
+    return this._fullName;
+  }
+  // static method
+  static hey() {
+    console.log(this);
+    return "hey there (..)";
+  }
+}
+
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    super(fullName, birthYear);
+    this.course = course;
+  }
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+}
+const ali = new StudentCl("Ali bin Saad", 2020, "AI");
+ali.introduce();
+
+// Inheritance Between "Classes":Object.create()
+
+const PersonProto = {
+  calAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+const jay = Object.create(StudentProto);
+jay.init("Jay", 2020, "AI");
+jay.introduce();
+jay.calAge();
+*/
+
+// public fields
+// private fields
+// public methods
+// private methods
+class Accounts {
+  // 1. public fields
+  locale = navigator.language;
+  // _movements = [];
+
+  // 2. private fields
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    //protected property
+    this._pin = pin;
+    this.#pin = pin;
+    // this._movements = [];
+    // this.locale = navigator.language;
+    console.log(`thanks for operning account, ${owner}`);
+  }
+  deposit(val) {
+    // this._movements.push(val);
+    this.#movements.push(val);
+    return this;
+  }
+  getMovements() {
+    return this.#movements;
+  }
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+  // 4. prive method
+  #approveLoan(val) {
+    return true;
+  }
+  requestLoan(val) {
+    if (this.#approveLoan(val)) {
+      this.deposit(val);
+      console.log("Loan Approved");
+      return this;
+    }
+  }
+}
+const acc1 = new Accounts("Jonas", "EUR", 1111);
+acc1.deposit(1000);
+acc1.withdraw(50);
+console.log(acc1);
+console.log(acc1.getMovements());
+// console.log(acc1.#movements); // error due to private field
+// console.log(acc1.#approveLoan(100)); // error due to private method
+acc1.deposit(1000).withdraw(500).requestLoan(5000).withdraw(2000);
+console.log(acc1.getMovements());

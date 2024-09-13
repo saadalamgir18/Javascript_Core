@@ -19,6 +19,7 @@ car1.accelerate();
 car1.brake();
 car1.brake();
 car1.brake();
+
 const EV = function (make, speed, charge) {
   Car.call(this, make, speed);
   this.charge = charge;
