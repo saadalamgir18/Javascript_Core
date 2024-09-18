@@ -87,7 +87,7 @@ const getCountryAndNeighbour = function (country) {
 getCountryAndNeighbour("portugal");
 getCountryAndNeighbour("usa");
 
-*/
+
 
 // const request = new XMLHttpRequest();
 // request.open("GET", `https://restcountries.com/v2/name/${country}`);
@@ -140,3 +140,131 @@ const getCountryData = function (country) {
 btn.addEventListener("click", function () {
   getCountryData("Germany");
 });
+
+console.log("test start");
+setTimeout(() => console.log("0 sec timer"), 0);
+Promise.resolve("Resolved Promis 1").then((res) => console.log(res));
+Promise.resolve("Resolved Promis 2").then((res) => {
+  for (let i = 0; i < 10000000000; i++) {}
+  console.log(res);
+});
+console.log("Test end");
+
+const lotteryPromis = new Promise(function (resolve, reject) {
+  console.log("Lottery draw us happening");
+  setTimeout(
+    function () {
+      if (Math.random() >= 0.5) {
+        resolve("You WIN");
+      } else {
+        reject(new Error("You lost your money!"));
+      }
+    },
+
+    2000
+  );
+});
+lotteryPromis
+  .then((res) => console.log(res))
+  .catch((err) => console.error(err));
+//
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+wait(2)
+  .then(() => {
+    console.log("i waited for 2 seconds");
+    return wait(1);
+  })
+  .then(() => console.log("i waited for 1 second"));
+*/
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => resolve(position),
+    //   (err) => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+getPosition().then((res) => console.log(res));
+
+function whereAmI() {
+  getPosition()
+    .then((res) => {
+      const { latitude: lat, longitude: lng } = res.coords;
+      console.log(lat, lng);
+      return fetch(
+        `https://geocode.xyz/${lat},${lng}?geoit=json&auth=143544208139568e15928008x111162`
+      );
+    })
+    .then((response) => {
+      if (!response.statusText === "OK")
+        throw new Error(`can not found country`);
+      return response.json();
+    })
+    .then((data) => {
+      console.log(`You are in ${data.city}, ${data.country}`);
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
+    })
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(`Country not found! (${response.status})`);
+      return response.json();
+    })
+    .then((data) => {
+      renderCountry(data[0]);
+    })
+    .catch((err) => console.log(err.message))
+    .finally(() => (countriesContainer.style.opacity = 1));
+}
+btn.addEventListener("click", whereAmI);
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+const imgContainer = document.querySelector(".images");
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const imgEl = document.createElement("img");
+    imgEl.src = imgPath;
+    imgEl.addEventListener("load", function () {
+      imgContainer.appendChild(imgEl);
+      resolve(imgEl);
+    });
+
+    imgEl.addEventListener("error", function () {
+      reject(new Error("Error in loading image"));
+    });
+  });
+};
+let currentImg;
+createImage("img/img-1.jpg")
+  .then((img) => {
+    currentImg = img;
+    return wait(2);
+  })
+  .then(() => {
+    currentImg.style.display = "none";
+    return createImage("img/img-2.jpg");
+  })
+  .then((img) => {
+    currentImg = img;
+    return wait(2);
+  })
+  .then(() => {
+    currentImg.style.display = "none";
+    return createImage("img/img-3.jpg");
+  })
+  .then((img) => {
+    currentImg = img;
+    return wait(2);
+  })
+  .then(() => (currentImg.style.display = "none"))
+
+  .catch((err) => console.error(err));
